@@ -1,0 +1,25 @@
+import requests
+
+lat = 40.7128
+lon = -74.0060
+radius = 5000  # in meters
+api_key = "8a7ee543-04e8-425a-8a01-bbebdab489ec"
+
+url = f"https://api.tomtom.com/traffic/services/5/incidentDetails?bbox={lon-0.05},{lat-0.05},{lon+0.05},{lat+0.05}&fields=all&key={api_key}&language=en"
+
+response = requests.get(url)
+data = response.json()
+
+print(data)
+
+
+# Extract useful fields
+current_speed = data['flowSegmentData']['currentSpeed']
+free_flow_speed = data['flowSegmentData']['freeFlowSpeed']
+congestion = data['flowSegmentData']['confidence']
+
+print(f"Current Speed: {current_speed} km/h")
+print(f"Free Flow Speed: {free_flow_speed} km/h")
+print(f"Confidence Level: {congestion}")
+
+
